@@ -1,0 +1,28 @@
+{
+  "version": 2,
+  "alias": [],
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {"distDir": "build"}
+    }, {
+      "src": "src/api/*/index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "^/api/(.*)", "dest": "/src/api/$1/index.js",
+      "methods": ["GET", "POST", "OPTIONS"],
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "*"
+      }
+    },
+    {
+      "src": "^/(.*)", "dest": "/$1",
+      "headers": {"Access-Control-Allow-Origin": "*"}
+    }
+  ]
+}
